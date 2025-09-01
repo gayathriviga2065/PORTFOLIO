@@ -1,0 +1,78 @@
+<div class="container">
+    <h2>College Management Form</h2>
+  
+    <!-- College Info -->
+    <form [formGroup]="collegeForm">
+      <label>College Name:</label>
+      <input type="text" formControlName="collegeName" required />
+  
+      <label>Location:</label>
+      <input type="text" formControlName="location" required />
+  
+      <label>Total Number of Students:</label>
+      <input type="number" formControlName="totalStudents" min="1" required />
+  
+      <label>Number of Students through Counselling:</label>
+      <input type="number" formControlName="counsellingStudents" min="0" required />
+    </form>
+  
+    <hr />
+  
+    <!-- Department % Deduction Form -->
+    <form [formGroup]="departmentForm" (ngSubmit)="addDepartment()">
+      <label>Department:</label>
+      <select formControlName="department" required>
+        <option value="" disabled selected>Select Department</option>
+        <option *ngFor="let dept of departmentOptions" [value]="dept">{{ dept }}</option>
+      </select>
+  
+      <label>Percentage Deducted:</label>
+      <input type="number" formControlName="percentage" min="1" max="100" required />
+  
+      <label>From:</label>
+      <select formControlName="admissionType" required>
+        <option value="Management">Management</option>
+        <option value="Counselling">Counselling</option>
+      </select>
+  
+      <button type="submit" [disabled]="departmentForm.invalid">Add</button>
+    </form>
+  
+    <div>
+      <p>Remaining Management %: {{ remainingManagementPercentage }}%</p>
+      <p>Remaining Counselling %: {{ remainingCounsellingPercentage }}%</p>
+    </div>
+  
+    <hr />
+  
+    <!-- Grid Table -->
+    <table border="1">
+      <thead>
+        <tr>
+          <th>Department</th>
+          <th>Student Percentage</th>
+          <th>Admission Type</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let record of departmentsList; let i = index">
+          <td>{{ record.department }}</td>
+          <td>{{ record.percentage }}%</td>
+          <td>{{ record.admissionType }}</td>
+          <td>
+            <button (click)="editDepartment(i)">Edit</button>
+            <button (click)="deleteDepartment(i)">Delete</button>
+          </td>
+        </tr>
+        <tr *ngIf="departmentsList.length === 0">
+          <td colspan="4" style="text-align:center;">No records added</td>
+        </tr>
+      </tbody>
+    </table>
+  
+    <hr />
+  
+    <button (click)="saveForm()" [disabled]="!saveEnabled">Save College Details</button>
+  </div>
+  

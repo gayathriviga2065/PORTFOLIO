@@ -1,0 +1,119 @@
+<div class="card">
+    <div class="card-title">
+        <h5 class="text-center" style="color: brown;">EMPLOYEE ONBOARDING</h5>
+    </div>
+    <br>
+    <form [formGroup]="EmployeeFormGroup" >
+        <div class="row g-2 ms-3">
+
+            <div class="col-lg-3 col-md-5 col">
+                <label class="form-label required">Employee Name<span style="color: red;">*</span></label>
+                <input class="col-lg-8 col-md-6 col form-control" formControlName="txtemployee_name" type="text" >
+            </div>
+            <div class="col-lg-3 col-md-5 col">
+                <label class="form-label required">Employee ID<span style="color: red;">*</span></label>
+                <input class="col-lg-8 col-md-6 col form-control" formControlName="txtemployee_id" type="text" >
+            </div>
+            <div class="col-lg-3 col-md-5 col">
+                <label class="form-label required">Email Address<span style="color: red;">*</span></label>
+                <input class="col-lg-8 col-md-6 col form-control" formControlName="txtemail_address" type="email" >
+            </div>
+            <div class="col-lg-3 col-md-5 col">
+                <label class="form-label required">Designation Type<span style="color: red;">*</span></label>
+                <input class="col-lg-8 col-md-6 col form-control" formControlName="txtdesignation" type="text" >
+            </div>
+            <div class="col-lg-3 col-md-5 col">
+                <label class="form-label required">Date Of Application<span style="color: red;">*</span></label>
+                <input class="col-lg-8 col-md-6 col form-control" formControlName="txtdoa" type="date" >
+            </div>
+            <div class="col-lg-3 col-md-5 col">
+                <label class="form-label required">Date OF Birth<span style="color: red;">*</span></label>
+                <input class="col-lg-8 col-md-6 col form-control" formControlName="txtdob" type="date" >
+            </div>
+            <div class="col-lg-3 col-md-5 col">
+                <label class="form-label required">Date Of Joining<span style="color: red;">*</span></label>
+                <input class="col-lg-8 col-md-6 col form-control" formControlName="txtdoj" type="date" >
+            </div>
+            <div class="col-lg-3 col-md-5 col">
+                <label class="form-label required">Project Done</label>
+                <input class="col-lg-8 col-md-6 col form-control" formControlName="txtproject" type="text" >
+            </div>
+            <div class="col-lg-3 col-md-5 col">
+                <label class="form-label required">Experience in years</label>
+                <input class="col-lg-8 col-md-6 col form-control" formControlName="txtyears" type="number" >
+            </div>
+
+            <br>
+            <hr>
+            <div class="card-title">
+                <h6 class="text-align" style="color: blue;">ADDRESS DETAILS</h6>
+            </div>
+            <div class="col-lg-3 col-md-5 col">
+                <label class="form-label">Address Type</label>
+                <input class="col-lg-8 col-md-6 col form-control" formControlName="txtaddress_type" type="text" >
+            </div>
+            <div class="col-lg-3 col-md-5 col">
+                <label class="form-label">Address Line 1</label>
+                <input class="col-lg-8 col-md-6 col form-control" formControlName="txtaddress_line1" type="text" >
+            </div>
+            <div class="col-lg-3 col-md-5 col">
+                <label class="form-label">Address Line 2</label>
+                <input class="col-lg-8 col-md-6 col form-control" formControlName="txtaddreaa_line2" type="text" >
+            </div>
+            <div class="col-lg-3 col-md-5 col">
+                <label class="form-label">Postal Code</label>
+                <input class="col-lg-8 col-md-6 col form-control" formControlName="txtpostal_code" type="text" >
+            </div>
+            <div class="col-lg-3 col-md-5 col">
+                <label class="form-label">District</label>
+                <input class="col-lg-8 col-md-6 col form-control" formControlName="txtdistrict" type="text" >
+            </div>
+            <div class="col-lg-3 col-md-5 col">
+                <label class="form-label">State</label>
+                <input class="col-lg-8 col-md-6 col form-control" formControlName="txtstate" type="text" >
+            </div>
+            <div class="col-lg-3 col-md-5 col">
+                <label class="form-label">Country</label>
+                <input class="col-lg-8 col-md-6 col form-control" formControlName="txtcountry" type="text" >
+            </div>
+        </div>
+    </form>
+    <div class="text-center my-4">
+
+            <button class="btn btn-success" type="submit" [disabled]="EmployeeFormGroup.invalid"  (click)="EmployeeAddOrUpdate()">
+                {{ editIndex !== null ? 'Update' : 'Submit' }}
+              </button>&nbsp;&nbsp;
+            <!-- Cancel button (only visible when editing) -->
+            <button class="btn btn-secondary" type="button"
+                    (click)="editIndex=null; EmployeeFormGroup.reset();">
+              Cancel
+            </button>
+    
+    </div>
+    <br>
+    <table class="table-striped table-responsive p-2 text-align">
+        <thead>
+            <tr>
+                <th>S.no</th>
+                <th>Employee</th>
+                <th>ID</th>
+                <th>Email</th>
+                <th>Address</th>
+                <th class="text-center">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let data of Employeelist; let i=index;">
+                <td>{{i+1}}</td>
+                <td>{{data.employeename}}</td>
+                <td>{{data.employeeid}}</td>
+                <td>{{data.email_addreaa}}</td>
+                <td>{{data.address}}</td>
+                <td class="text-center">
+                    <button class="btn btn-success text-white" (click)="EmployeeEdit(i)">Edit</button>&nbsp;
+                    <button class="btn btn-danger text-white" (click)="EmployeeDelete(i)" placeholder="Delete"><span class="fa-solid fa-file fs-6 text-white">Delete</span></button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
